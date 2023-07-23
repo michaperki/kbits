@@ -1,28 +1,48 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '@supabase/auth';
+// Home.js
 
-const Home = () => {
-  const { user } = useAuth();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+import { useState, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+import WalletConnection from "../components/WalletConnection";
+import supabase from "../services/supabase";
+import authService from "../services/authService";
 
-  useEffect(() => {
-    if (user) {
-      setIsLoggedIn(true);
+export default function Home() {
+    const [session, setSession] = useState(null);
+    
+    const handleSignOut = async () => {
+        try {
+        await authService.signOut();
+        } catch (error) {
+        // Handle error
+        console.error(error);
+        }
+    };
+    
+    useEffect(() => {
+        authService.getSession().then((session) => {
+        setSession(session);
+        });
+    
+        const {
+        data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+        });
+    
+        return () => subscription.unsubscribe();
+    }, []);
+    
+    if (!session) {
+        return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
     } else {
-      setIsLoggedIn(false);
+        return (
+        <>
+            <div>Logged in!</div>
+            <button onClick={handleSignOut}>Sign Out</button>
+            <WalletConnection />
+        </>
+        );
     }
-  }, [user]);
-
-  return (
-    <div>
-      {isLoggedIn ? (
-        <h1>Welcome, {user.email}!</h1>
-      ) : (
-        <h1>Welcome to our Web-3 App!</h1>
-      )}
-      {!isLoggedIn && <p>Please sign in to access more features.</p>}
-    </div>
-  );
-};
-
-export default Home;
+    }
