@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/kbits/static/css/main.073c9b0a.css",
-    "main.js": "/kbits/static/js/main.420f11b4.js",
+    "main.css": "/kbits/static/css/main.e6c13ad2.css",
+    "main.js": "/kbits/static/js/main.ae272ce9.js",
     "static/js/787.4e72781e.chunk.js": "/kbits/static/js/787.4e72781e.chunk.js",
-    "static/media/logo.svg": "/kbits/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/kbits/index.html",
-    "main.073c9b0a.css.map": "/kbits/static/css/main.073c9b0a.css.map",
-    "main.420f11b4.js.map": "/kbits/static/js/main.420f11b4.js.map",
+    "main.e6c13ad2.css.map": "/kbits/static/css/main.e6c13ad2.css.map",
+    "main.ae272ce9.js.map": "/kbits/static/js/main.ae272ce9.js.map",
     "787.4e72781e.chunk.js.map": "/kbits/static/js/787.4e72781e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.420f11b4.js"
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.ae272ce9.js"
   ]
 }
