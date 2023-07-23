@@ -1,30 +1,26 @@
+// components/WalletConnection.js
 import { useState } from "react";
+import WalletService from "../services/walletService";
 
 const WalletConnection = () => {
   const [walletAddress, setWalletAddress] = useState(null);
 
-  const connectWallet = async () => {
-    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-      try {
-        /* MetaMask is installed */
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setWalletAddress(accounts[0]);
-        console.log(accounts[0]);
-      } catch (err) {
-        console.error(err.message);
+  const handleConnectWallet = async () => {
+    try {
+      const address = await WalletService.connectWallet();
+      if (address) {
+        setWalletAddress(address);
       }
-    } else {
-      /* MetaMask is not installed */
-      console.log("Please install MetaMask");
+    } catch (error) {
+      // Handle wallet connection error
+      console.error(error.message);
     }
   };
 
   return (
     <div>
-        <button onClick={connectWallet}>Connect Wallet</button>
-        <div>{walletAddress}</div>
+      <button onClick={handleConnectWallet}>Connect Wallet</button>
+      <div>{walletAddress}</div>
     </div>
   );
 };
